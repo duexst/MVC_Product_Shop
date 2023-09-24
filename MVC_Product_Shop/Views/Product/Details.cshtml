@@ -1,0 +1,21 @@
+﻿@model Product
+
+<h3 class="my-5">
+	@Model.Name
+</h3>
+
+<div class="row gx-5">
+	<div class="col-7">
+		<h4>@Model.ShortDescription</h4>
+		<p>@Model.LongDescription</p>
+		<h3 class="pull-righ">@Model.Price.ToString("C")</h3>
+		<div class="addToCart">
+			<p class="button">
+				<a class="btn btn-secondary"
+				   asp-controller="ShoppingCart"
+				   asp-action="AddToShoppingCart"
+				   asp-route-pieId="@Model.ProductId">Add to cart</a>
+			</p>
+		</div>
+	</div>
+</div>

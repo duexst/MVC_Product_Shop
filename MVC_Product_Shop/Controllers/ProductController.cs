@@ -20,5 +20,16 @@ namespace MVC_Product_Shop.Controllers
             ProductListViewModel productListViewModel = new(_productRepository.AllProducts, "Toys");
             return View(productListViewModel);
         }
+
+        public IActionResult Details(int id)
+        {
+            var product = _productRepository.GetProductById(id);
+            if(product == null)
+            {
+                return NotFound();
+            }
+
+            return View(product);
+        }
     }
 }

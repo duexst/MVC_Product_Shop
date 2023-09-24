@@ -1,8 +1,36 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model HomeViewModel
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>products of the week</h1>
+    <h5>Enjoy a weekly selection of our favorite products</h5>
+
+    <div class="row products-of-the-week">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var product in Model.FeaturedProducts)
+            {
+                <div class="col">
+                    <div class="card product-card">
+                        <img src="@product.ImageThumbnailUrl" class="card-img-top" alt="@product.Name">
+                        <div class="card-body product-button">
+                            <h4 class="d-grid">
+                            </h4>
+
+                            <div class="d-flex justify-content-between mt-2">
+                                <h2 class="text-start">
+                                    <a asp-controller="product"
+                                       asp-action="Details"
+                                       asp-route-id="@product.ProductId"
+                                       class="product-link">@product.Name</a>
+                                </h2>
+                                <h5 class="text-nowrap">
+                                    @product.Price.ToString("c")
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
 </div>

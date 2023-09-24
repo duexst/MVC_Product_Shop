@@ -1,32 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MVC_Product_Shop.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using MVC_Product_Shop.Models;
-using System.Diagnostics;
 
 namespace MVC_Product_Shop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductRepository _productRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductRepository productRepository)
         {
-            _logger = logger;
+            _productRepository = productRepository;
         }
 
-        public IActionResult Index()
+        public ViewResult Index()
         {
-            return View();
-        }
+            var productsOfTheWeek = _productRepository.FeaturedProducts;
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            var homeViewModel = new HomeViewModel(productsOfTheWeek);
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(homeViewModel);
         }
     }
 }
