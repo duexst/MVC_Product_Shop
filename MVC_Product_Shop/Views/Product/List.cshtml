@@ -1,0 +1,11 @@
+﻿@model ProductListViewModel
+
+<h1>@Model.CurrentCategory</h1>
+@foreach(var product in Model.Products)
+{
+	<div>
+		<h2>@product.Name</h2>
+		<h3>@product.Price.ToString("c")</h3>
+		<h4>@product.Category.CategoryName</h4>
+	</div>
+}

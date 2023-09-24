@@ -4,14 +4,15 @@ using MVC_Product_Shop.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ProduktShopDbContext>(options =>
 {
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:MVCProductShopDbContextConnection"]);
 });
-
-//Own services get registered here
 
 
 var app = builder.Build();
@@ -34,5 +35,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+DbInitializer.Seed(app);
 
 app.Run();
