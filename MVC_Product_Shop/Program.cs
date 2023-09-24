@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using MVC_Product_Shop.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ProduktShopDbContext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:MVCProductShopDbContextConnection"]);
+});
 
 //Own services get registered here
 
