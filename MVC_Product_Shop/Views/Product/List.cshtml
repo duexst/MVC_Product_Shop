@@ -1,40 +1,75 @@
 ﻿@model ProductListViewModel
+<h1>Product Page</h1>
+<div>
+    @using (Html.BeginForm("FilteredList", "Product", FormMethod.Post)){
+        @*<input class="form-control-sm" type="text" placeholder="Search string" name="SearchString"/>*@
+        @Html.TextBoxFor(m => m.SearchString)
+        <button type="submit" class="btn btn-primary">Search</button>
+    }
+</div>
 
-<h1>Products</h1>
+<h1>@Model.CurrentCategory</h1>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
-            <th scope="col">Featured</th>
-            <th scope="col">Category</th>
-            <th scope="col">Buy Product</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var product in Model.Products){
-            <tr>
-                <th scope="row">
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Dropdown button
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        @{
+            <li>
+                <a asp-controller="Product"
+                   asp-action="List"
+                   asp-route-category=""
+                   class="product-link">All categories</a>
+            </li>
+            foreach(var category in Model.Categories)
+            {
+                <li>
                     <a asp-controller="Product"
-                        asp-action="Details"
-                        asp-route-id="@product.ProductId"
-                        class="product-link">@product.Name
-                    </a>
-                </th>
-                <td>@product.Price.ToString("c")</td>
-                <td>
-                    @(product.IsFeaturedProduct ?  "Yes" : "No" )
-                </td>
-                <td>@product.Category.CategoryName</td>
-                <td>
-                    <a class="btn btn-secondary"
-                       asp-controller="ShoppingCart"
-                       asp-action="AddToShoppingCart"
-                       asp-route-productId="@product.ProductId">+ Add to cart</a>
-                </td>
-            </tr>
+                       asp-action="List"
+                       asp-route-category="@category.CategoryName"
+                       class="product-link">@category.CategoryName</a>
+                </li>
+            }
+
         }
-    </tbody>
-</table>
+    </ul>
+</div>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Featured</th>
+                <th scope="col">Category</th>
+                <th scope="col">Buy Product</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var product in Model.Products){
+                <tr>
+                    <th scope="row">
+                        <a asp-controller="Product"
+                            asp-action="Details"
+                            asp-route-id="@product.ProductId"
+                            class="product-link">@product.Name
+                        </a>
+                    </th>
+                    <td>@product.Price.ToString("c")</td>
+                    <td>
+                        @(product.IsFeaturedProduct ?  "Yes" : "No" )
+                    </td>
+                    <td>@product.Category.CategoryName</td>
+                    <td>
+                        <a class="btn btn-secondary"
+                           asp-controller="ShoppingCart"
+                           asp-action="AddToShoppingCart"
+                           asp-route-productId="@product.ProductId">+ Add to cart</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

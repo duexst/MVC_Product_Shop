@@ -17,8 +17,22 @@ namespace MVC_Product_Shop.Controllers
 
         public IActionResult List(string category)
         {
-            ProductListViewModel productListViewModel = new(_productRepository.AllProducts, "Toys");
-            return View(productListViewModel);
+
+            IEnumerable<Product> products;
+            string? currentCategory;
+
+            if (string.IsNullOrEmpty(category))
+            {
+                products = _productRepository.AllProducts.OrderBy(p => p.ProductId);
+                currentCategory = "All products";
+            }
+            else
+            {
+                currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
+                products = _productRepository.GetProductsForCategory(currentCategory);           
+            }
+
+            return View(new ProductListViewModel(products, _categoryRepository.AllCategories, currentCategory));
         }
 
         public IActionResult Details(int id)
@@ -30,6 +44,23 @@ namespace MVC_Product_Shop.Controllers
             }
 
             return View(product);
+        }
+
+        public IActionResult FilteredList(string searchString)
+        {
+            IEnumerable<Product> products;
+            string currentCategory = "All products";
+
+            if (string.IsNullOrEmpty(searchString))
+            {
+                products = _productRepository.AllProducts.OrderBy(p => p.ProductId);
+            }
+            else
+            {
+                products = _productRepository.SearchProducts(searchString);
+            }
+
+            return View("List",new ProductListViewModel(products, _categoryRepository.AllCategories, currentCategory));
         }
     }
 }

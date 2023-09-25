@@ -8,7 +8,7 @@ namespace MVC_Product_Shop.Models
         IEnumerable<Product> FeaturedProducts { get; }
 
         Product? GetProductById(int productId);
-        public IEnumerable<Product> GetProductsForCategory(string categoryName);
+        public IEnumerable<Product> GetProductsForCategory(string? categoryName);
         IEnumerable<Product> SearchProducts(string searchQuery);
     }
 }

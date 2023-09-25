@@ -32,14 +32,15 @@ namespace MVC_Product_Shop.Models
             return _productShopDbContext.Products.FirstOrDefault(p => p.ProductId == productId);
         }
 
-        public IEnumerable<Product> GetProductsForCategory(string categoryName)
+        public IEnumerable<Product> GetProductsForCategory(string? categoryName)
         {
-            return _productShopDbContext.Products.Where(p => p.Category.CategoryName == categoryName);
+            return _productShopDbContext.Products.Where(p => p.Category.CategoryName == categoryName)
+                    .OrderBy(p => p.ProductId);
         }
 
         public IEnumerable<Product> SearchProducts(string searchQuery)
         {
-            return _productShopDbContext.Products.Where(p => p.Name.Contains(searchQuery));
+            return _productShopDbContext.Products.Where(p => p.Name.Contains(searchQuery)).OrderBy(p => p.ProductId);
         }
     }
 }
