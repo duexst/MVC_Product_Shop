@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ProduktShopDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration["ConnectionStrings:MVCProductShopDbContextConnection"]);
+        builder.Configuration["ConnectionStrings:ProductShopDbContextConnection"]);
 });
 
 
