@@ -2,7 +2,6 @@
 <h1>Product Page</h1>
 <div>
     @using (Html.BeginForm("FilteredList", "Product", FormMethod.Post)){
-        @*<input class="form-control-sm" type="text" placeholder="Search string" name="SearchString"/>*@
         @Html.TextBoxFor(m => m.SearchString)
         <button type="submit" class="btn btn-primary">Search</button>
     }

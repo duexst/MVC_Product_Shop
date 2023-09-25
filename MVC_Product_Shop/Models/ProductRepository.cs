@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MVC_Product_Shop.Models
 {
@@ -41,6 +42,12 @@ namespace MVC_Product_Shop.Models
         public IEnumerable<Product> SearchProducts(string searchQuery)
         {
             return _productShopDbContext.Products.Where(p => p.Name.Contains(searchQuery)).OrderBy(p => p.ProductId);
+        }
+
+        public void AddProduct(Product product)
+        {
+            _productShopDbContext.Add(product);
+            _productShopDbContext.SaveChanges();
         }
     }
 }

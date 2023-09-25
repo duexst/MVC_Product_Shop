@@ -29,7 +29,7 @@ namespace MVC_Product_Shop.Controllers
             else
             {
                 currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
-                products = _productRepository.GetProductsForCategory(currentCategory);           
+                products = _productRepository.GetProductsForCategory(currentCategory);
             }
 
             return View(new ProductListViewModel(products, _categoryRepository.AllCategories, currentCategory));
@@ -38,7 +38,7 @@ namespace MVC_Product_Shop.Controllers
         public IActionResult Details(int id)
         {
             var product = _productRepository.GetProductById(id);
-            if(product == null)
+            if (product == null)
             {
                 return NotFound();
             }
@@ -60,7 +60,20 @@ namespace MVC_Product_Shop.Controllers
                 products = _productRepository.SearchProducts(searchString);
             }
 
-            return View("List",new ProductListViewModel(products, _categoryRepository.AllCategories, currentCategory));
+            return View("List", new ProductListViewModel(products, _categoryRepository.AllCategories, currentCategory));
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View(new ProductAddViewModel(_categoryRepository.AllCategories));
+        }
+
+        [HttpPost]
+        public IActionResult Add(ProductAddViewModel productAddViewModel) 
+        {
+            //_productRepository.AddProduct(product);
+            return RedirectToAction("List");
         }
     }
 }

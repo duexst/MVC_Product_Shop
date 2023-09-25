@@ -1,0 +1,30 @@
+﻿@model ProductAddViewModel
+
+<h1>Product Page</h1>
+<div>
+    @using (Html.BeginForm("Add", "Product", FormMethod.Post)){
+        <div>
+            <label asp-for="ProductName" class="form-label"></label>
+            @Html.TextBoxFor(m => m.ProductName)
+        </div>
+        <div>
+            <label asp-for="Price" class="form-label"></label>
+            @Html.TextBoxFor(m => m.Price, new { @type = "number" })
+        </div>
+        <div>
+            <label asp-for="SelectedCategory" class="form-label"></label>
+            @Html.DropDownListFor(m => m.SelectedCategory, new SelectList(Model.Categories, "CategoryId", "CategoryName"), "Select a category")
+        </div>
+        <div>
+            <label asp-for="Description" class="form-label"></label>
+            @Html.TextBoxFor(m => m.Description)
+        </div>
+        <div>
+            <label asp-for="IsFeaturedProduct" class="form-label"></label>
+            @Html.CheckBoxFor(m => m.IsFeaturedProduct)
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    }
+</div>
