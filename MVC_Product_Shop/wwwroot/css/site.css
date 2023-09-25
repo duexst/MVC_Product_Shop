@@ -605,7 +605,7 @@ progress {
 }
 
     .blockquote-footer::before {
-        content: "— ";
+        content: "ï¿½ï¿½";
     }
 
 .img-fluid {
@@ -11822,6 +11822,7 @@ h6, .h6 {
     width: 144.06px;
     top: -84px;
     margin-bottom: -44px;
+    margin-top: 100px;
 }
 
 .products-featrued {

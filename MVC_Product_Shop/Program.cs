@@ -7,8 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+
+builder.Services.AddScoped<IShoppingCart, ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ProduktShopDbContext>(options =>
+builder.Services.AddDbContext<ProductShopDbContext>(options =>
 {
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:ProductShopDbContextConnection"]);
@@ -27,6 +32,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
 
 app.UseRouting();
 

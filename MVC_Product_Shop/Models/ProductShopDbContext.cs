@@ -2,13 +2,14 @@
 
 namespace MVC_Product_Shop.Models
 {
-    public class ProduktShopDbContext : DbContext
+    public class ProductShopDbContext : DbContext
     {
-        public ProduktShopDbContext(DbContextOptions<ProduktShopDbContext> options) : base(options)
+        public ProductShopDbContext(DbContextOptions<ProductShopDbContext> options) : base(options)
         {
         }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set;}
     }
 }

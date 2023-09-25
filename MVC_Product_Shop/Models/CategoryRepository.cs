@@ -2,9 +2,9 @@
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly ProduktShopDbContext _productShopDbContext;
+        private readonly ProductShopDbContext _productShopDbContext;
 
-        public CategoryRepository(ProduktShopDbContext produktShopDbContext) 
+        public CategoryRepository(ProductShopDbContext produktShopDbContext) 
         {
             _productShopDbContext = produktShopDbContext;
         }

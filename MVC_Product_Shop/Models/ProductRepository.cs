@@ -4,9 +4,9 @@ namespace MVC_Product_Shop.Models
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ProduktShopDbContext _productShopDbContext;
+        private readonly ProductShopDbContext _productShopDbContext;
 
-        public ProductRepository(ProduktShopDbContext productShopDbContext)
+        public ProductRepository(ProductShopDbContext productShopDbContext)
         {
             _productShopDbContext = productShopDbContext;
         }

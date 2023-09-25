@@ -1,16 +1,16 @@
 ﻿@model ProductListViewModel
 
-<h1>@Model.CurrentCategory</h1>
+<h1>Products</h1>
 
 
 <table class="table">
     <thead>
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">Description</th>
             <th scope="col">Price</th>
             <th scope="col">Featured</th>
             <th scope="col">Category</th>
+            <th scope="col">Buy Product</th>
         </tr>
     </thead>
     <tbody>
@@ -25,40 +25,16 @@
                 </th>
                 <td>@product.Price.ToString("c")</td>
                 <td>
-                    @(
-                    product.IsFeaturedProduct ?  "Yes" : "No"; 
-                    )
+                    @(product.IsFeaturedProduct ?  "Yes" : "No" )
                 </td>
                 <td>@product.Category.CategoryName</td>
+                <td>
+                    <a class="btn btn-secondary"
+                       asp-controller="ShoppingCart"
+                       asp-action="AddToShoppingCart"
+                       asp-route-productId="@product.ProductId">+ Add to cart</a>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-
-<div class="row row-cols-1 row-cols-md-3 g-4">
-
-    @foreach (var product in Model.Products)
-    {
-        <div class="col">
-            <div class="card product-card">
-                <div class="card-body product-button">
-                    <h4 class="d-grid">
-                    </h4>
-
-                    <div class="d-flex justify-content-between mt-2">
-                        <h2 class="text-start">
-                            <a asp-controller="Product"
-                               asp-action="Details"
-                               asp-route-id="@product.ProductId"
-                               class="product-link">@product.Name</a>
-                        </h2>
-                        <h5 class="text-nowrap">
-                            @product.Price.ToString("c")
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-
-</div>

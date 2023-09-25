@@ -15,7 +15,7 @@ namespace MVC_Product_Shop.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string category)
         {
             ProductListViewModel productListViewModel = new(_productRepository.AllProducts, "Toys");
             return View(productListViewModel);
