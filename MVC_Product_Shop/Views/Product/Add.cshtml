@@ -3,27 +3,27 @@
 <h1>Product Page</h1>
 <div>
     @using (Html.BeginForm("Add", "Product", FormMethod.Post)){
-        <div>
-            <label asp-for="ProductName" class="form-label"></label>
-            @Html.TextBoxFor(m => m.ProductName)
+        <div class="form-group">
+            <label asp-for="Product.Name" class="form-label">Product: </label>
+            @Html.TextBoxFor(m => m.Product.Name, new {@class = "form-control"})
+        </div>
+        <div class="form-group">
+            <label asp-for="Product.Price" class="form-label">Price: </label>
+            @Html.TextBoxFor(m => m.Product.Price, new { @type = "number", step="any" })
         </div>
         <div>
-            <label asp-for="Price" class="form-label"></label>
-            @Html.TextBoxFor(m => m.Price, new { @type = "number" })
+            <label asp-for="Product.Description" class="form-label"></label>
+            <textarea class="form-control" rows="3"></textarea>
         </div>
-        <div>
-            <label asp-for="SelectedCategory" class="form-label"></label>
-            @Html.DropDownListFor(m => m.SelectedCategory, new SelectList(Model.Categories, "CategoryId", "CategoryName"), "Select a category")
+        <div class="form-group">
+            <label asp-for="Product.Category" class="form-label"></label>
+            @Html.DropDownListFor(m => m.Product.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName"), new {@class = "form-select"})
         </div>
-        <div>
-            <label asp-for="Description" class="form-label"></label>
-            @Html.TextBoxFor(m => m.Description)
+        <div class="form-check">
+            <label asp-for="Product.IsFeaturedProduct" class="form-check-label"></label>
+            @Html.CheckBoxFor(m => m.Product.IsFeaturedProduct, new {@class = "form-check-input"})
         </div>
-        <div>
-            <label asp-for="IsFeaturedProduct" class="form-label"></label>
-            @Html.CheckBoxFor(m => m.IsFeaturedProduct)
-        </div>
-        <div>
+        <div class="form-group">
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     }

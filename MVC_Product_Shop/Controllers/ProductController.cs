@@ -70,9 +70,15 @@ namespace MVC_Product_Shop.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(ProductAddViewModel productAddViewModel) 
+        public IActionResult Add(Product product) 
         {
-            //_productRepository.AddProduct(product);
+            //if(!ModelState.IsValid)
+            //{
+            //    return BadRequest(product);
+            //}
+
+            product.Category = _categoryRepository.AllCategories.First(c => c.CategoryId == product.CategoryId);
+            _productRepository.AddProduct(product);
             return RedirectToAction("List");
         }
     }
