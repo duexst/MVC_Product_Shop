@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Product_Shop.Migrations
 {
     [DbContext(typeof(ProductShopDbContext))]
-    [Migration("20230925073711_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230930182106_InitializeDb")]
+    partial class InitializeDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,9 +57,6 @@ namespace MVC_Product_Shop.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsFeaturedProduct")
                         .HasColumnType("bit");
 
@@ -77,6 +74,30 @@ namespace MVC_Product_Shop.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("MVC_Product_Shop.Models.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("ShoppingCartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShoppingCartItemId"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ShoppingCartItemId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCartItems");
+                });
+
             modelBuilder.Entity("MVC_Product_Shop.Models.Product", b =>
                 {
                     b.HasOne("MVC_Product_Shop.Models.Category", "Category")
@@ -86,6 +107,17 @@ namespace MVC_Product_Shop.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("MVC_Product_Shop.Models.ShoppingCartItem", b =>
+                {
+                    b.HasOne("MVC_Product_Shop.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("MVC_Product_Shop.Models.Category", b =>

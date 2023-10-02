@@ -7,15 +7,21 @@
 
 <div class="row gx-3">
     <div class="col-8">
-        @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
+        @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
         {
             <div class="card shopping-cart-card mb-2">
                 <div class="row">
                     <div class="card-body">
-                        <h5 class="card-text">@line.Amount x @line.Product.Name</h5>
+                        <h5 class="card-text">@item.Amount x @item.Product.Name</h5>
                         <div class="d-flex justify-content-between">
-                            <h6>@line.Product.Description</h6>
-                            <h2>@line.Product.Price.ToString("c")</h2>
+                            <h6>@item.Product.Description</h6>
+                            <h2>@item.Product.Price.ToString("c")</h2>
+                            <a class="btn btn-secondary" 
+                            asp-controller="ShoppingCart"
+                            asp-action="RemoveFromShoppingCart"
+                            asp-route-productId="@item.Product.ProductId">
+                                <h6>Remove</h6>
+                            </a>
                         </div>
                     </div>
                 </div>

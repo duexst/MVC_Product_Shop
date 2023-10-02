@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Product_Shop.Migrations
 {
     [DbContext(typeof(ProductShopDbContext))]
-    partial class ProduktShopDbContextModelSnapshot : ModelSnapshot
+    partial class ProductShopDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -53,9 +53,6 @@ namespace MVC_Product_Shop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsFeaturedProduct")
