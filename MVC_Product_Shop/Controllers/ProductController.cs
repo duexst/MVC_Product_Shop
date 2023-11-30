@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVC_Product_Shop.Models;
 using MVC_Product_Shop.ViewModels;
+using System.Diagnostics;
 
 namespace MVC_Product_Shop.Controllers
 {
@@ -8,16 +9,18 @@ namespace MVC_Product_Shop.Controllers
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private Stopwatch _stopwatch;
 
         public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _stopwatch = new Stopwatch();
         }
 
         public IActionResult List(string category)
         {
-
+            _stopwatch.Restart();
             IEnumerable<Product> products;
             string? currentCategory;
 
@@ -32,22 +35,26 @@ namespace MVC_Product_Shop.Controllers
                 products = _productRepository.GetProductsForCategory(currentCategory);
             }
 
+            _stopwatch.Stop();
             return View(new ProductListViewModel(products, _categoryRepository.AllCategories, currentCategory));
         }
 
         public IActionResult Details(int id)
         {
+            _stopwatch.Restart();
             var product = _productRepository.GetProductById(id);
             if (product == null)
             {
                 return NotFound();
             }
 
+            _stopwatch.Stop();
             return View(product);
         }
 
         public IActionResult FilteredList(string searchString)
         {
+            _stopwatch.Restart();
             IEnumerable<Product> products;
             string currentCategory = "All products";
 
@@ -59,7 +66,7 @@ namespace MVC_Product_Shop.Controllers
             {
                 products = _productRepository.SearchProducts(searchString);
             }
-
+            _stopwatch.Stop();
             return View("List", new ProductListViewModel(products, _categoryRepository.AllCategories, currentCategory));
         }
 
@@ -72,6 +79,7 @@ namespace MVC_Product_Shop.Controllers
         [HttpPost]
         public IActionResult Add(Product product) 
         {
+            _stopwatch.Restart();
             //if(!ModelState.IsValid)
             //{
             //    return BadRequest(product);
@@ -79,7 +87,9 @@ namespace MVC_Product_Shop.Controllers
 
             product.Category = _categoryRepository.AllCategories.First(c => c.CategoryId == product.CategoryId);
             _productRepository.AddProduct(product);
-            return RedirectToAction("List");
+
+            _stopwatch.Stop();
+            return RedirectToAction("List");            
         }
     }
 }
